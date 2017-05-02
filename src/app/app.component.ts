@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as Echo from 'laravel-echo';
 
-declare var google:any;
+declare let google:any;
+
+const PUSHER_API_KEY = 'YOUR_PUSHER_KEY';
 
 @Component({
   selector: 'app-root',
@@ -26,9 +28,9 @@ export class AppComponent implements OnInit{
 
 
   subscribe(){
-    var echo = new Echo({
+    let echo = new Echo({
       broadcaster: 'pusher',
-      key: 'YOUR_PUSHER_KEY'
+      key: PUSHER_API_KEY
     });
     echo.channel('location')
       .listen('SendLocation', (e)=>{
@@ -39,7 +41,7 @@ export class AppComponent implements OnInit{
   }
 
   launchMap(lat, lng){
-    var nigeria= {lat: lat, lng: lng};
+    let nigeria= {lat: lat, lng: lng};
     this.map = new google.maps.Map(document.getElementById('map'), {
       zoom: 13,
       center: nigeria
@@ -60,7 +62,7 @@ export class AppComponent implements OnInit{
 
     this.lineCoordinates.push(new google.maps.LatLng(this.lat, this.long));
 
-    var lineCoordinatesPath = new google.maps.Polyline({
+    let lineCoordinatesPath = new google.maps.Polyline({
       path: this.lineCoordinates,
       geodesic: true,
       map: this.map,
