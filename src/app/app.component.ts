@@ -4,6 +4,7 @@ import * as Echo from 'laravel-echo';
 declare let google:any;
 
 const PUSHER_API_KEY = 'YOUR_PUSHER_KEY';
+const PUSHER_CLUSTER = 'PUSHER_CLUSTER';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +31,8 @@ export class AppComponent implements OnInit{
   subscribe(){
     let echo = new Echo({
       broadcaster: 'pusher',
-      key: PUSHER_API_KEY
+      key: PUSHER_API_KEY,
+      cluster: PUSHER_CLUSTER
     });
     echo.channel('location')
       .listen('SendLocation', (e)=>{
