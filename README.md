@@ -1,34 +1,53 @@
-# Pusher
+# Angular Realtime Map
+This project displays a map with a marker and the position of the marker gets updated when a pusher event is received. This is the frontend part to the [laravel-realtime-map](https://github.com/perfectmak/laravel-realtime-map) project. It also has an accompanying tutorial that can be found [here](https://pusher.com/tutorials/realtime-map-laravel/).
 
-This project is the frontend part to the [laravel-realtime-map](https://github.com/perfectmak/laravel-realtime-map) project.
+## Getting Started
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-It displays the map and the marker position gets updated when a pusher event is received.
+### Prerequisites
+You would need the following softwares installed on your local machine:
 
+- Node.js: Download Node.js and NPM [here](https://nodejs.org/en/download/)
+- Angular CLI: This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
+### 1: Update Pusher Credentials
+Change the value of the `PUSHER_API_KEY` in `src/app/app.component.ts` to your Pusher projects credentials.
 
-NOTE: This project was generated with [Angular CLI](https://github.com/angular/angular-cli) 
-version 1
-.0.0.
+### 2: Install dependencies
+Run `npm install` to install a Node dependencies.
 
-## Setup
-
-### Update Pusher Credentials
-Change the value of the `PUSHER_API_KEY` in `src/app/app.component.ts` to your Pusher projects 
-credentials.
-
-## Development server
-
+### 2: Start Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Build
+### 3: Test the Application
+You would need to ensure that the backend server for this application is running. See [here](https://github.com/perfectmak/laravel-realtime-map) for instructions to setup.
+In order to see the marker move on the map, you will need to send `App\Events\SendLocation` events to the location channel. The easiest way to do this is by using the event creator on the [Pusher Debug Console](https://dashboard.pusher.com/). Here is a sample data format that can be used to trigger an update:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+```JSON
+{
+  "location": {
+    "lat": "9.084999999999999",
+    "long": "8.678299999999998"
+  }
+}
+```
 
-## Running unit tests
+Alternatively, location updates can also be triggered by sending web requests to the Laravel application. Here is an Angular function that can be used to send location update requests:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```js
+sendLocation(lat: string, long: string) {
+  const serverUrl = 'http://localhost:8000';
+  const params = new URLSearchParams();
+  params.set("lat", lat);
+  params.set("long", long);
 
-## Running end-to-end tests
+  return this.http.post(serverUrl + '/map', params);
+}
+```
+Note that the above function is assuming that the Laravel application is accessible via 'http://localhost:8000', you can update the `serverUrl` to your own configuration.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+
+## Built With
+* [Angular](https://angular.io/)
+* [Laravel](https://laravel.com/)
+* [Pusher](https://pusher.com/) - APIs to enable devs building realtime features
