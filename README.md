@@ -48,6 +48,6 @@ Note that the above function is assuming that the Laravel application is accessi
 
 
 ## Built With
-* [Angular](https://angular.io/)
-* [Laravel](https://laravel.com/)
+* [Angular](https://angular.io/) - Frontend framework for developing Web and Mobile Applications
+* [Laravel](https://laravel.com/) - PHP Framework for Web Artisans
 * [Pusher](https://pusher.com/) - APIs to enable devs building realtime features
